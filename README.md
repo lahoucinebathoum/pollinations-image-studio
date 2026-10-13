@@ -4,9 +4,9 @@ emoji: 🐠
 colorFrom: indigo
 colorTo: red
 sdk: static
-pinned: false
 app_build_command: npm run build
 app_file: build/index.html
+pinned: false
 license: mit
 short_description: Free AI image generator powered by Pollinations
 ---
