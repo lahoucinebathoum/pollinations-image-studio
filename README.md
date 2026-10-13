@@ -14,38 +14,37 @@ short_description: Free AI image generator powered by Pollinations
 
 # 🎨 Pollinations Image Studio
 
-Pollinations Image Studio is a web application that allows users to generate AI images directly in their browser using the Pollinations API.
-
-Create images from text prompts with a simple and accessible interface.
+Pollinations Image Studio is a web application built with React.js, JavaScript, HTML, and CSS. It allows users to generate AI images directly in their browser using the Pollinations API.
 
 ## ✨ Features
 
-- AI image generation from text prompts.
-- Browser-based interface.
-- Pollinations API integration.
-- Connect your Pollinations account using the available authentication flow.
-- Generate images without running a local backend.
+- Generate AI images from text prompts.
+- Simple and responsive web interface.
+- Integration with the Pollinations API.
+- Browser-based image generation.
+- Pollinations account connection through the available authentication flow.
 
 ## 🚀 Live Demo
 
-Try Pollinations Image Studio here:
+Try the application:
 
 https://lahoucine98-pollinations-image-studio.static.hf.space/
 
-## 🛠️ Technology
+## 🛠️ Technologies
 
-- HTML
-- CSS
+- React.js
 - JavaScript
+- HTML5
+- CSS3
 - Pollinations API
 - Hugging Face Spaces
 
 ## 📖 Getting Started
 
-1. Open the live application using the link above.
-2. Connect your Pollinations account if requested.
-3. Enter a prompt describing the image you want to create.
-4. Generate your image and view the result.
+1. Open the live application.
+2. Connect your Pollinations account if required.
+3. Enter a prompt describing the image you want to generate.
+4. Generate and view your AI image.
 
 ## 🙏 Credits
 
@@ -53,11 +52,11 @@ This project uses the Pollinations API for AI image generation.
 
 [![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
 
-Visit [pollinations.ai](https://pollinations.ai/) to discover Pollinations.
+Visit [pollinations.ai](https://pollinations.ai/) to discover more.
 
 ## 📄 License
 
-This project is released under the MIT License.
+This project is licensed under the MIT License.
 
 ---
 
