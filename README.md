@@ -16,34 +16,33 @@ short_description: Free AI image generator powered by Pollinations
 
 An AI image generation studio powered by the Pollinations API.
 
-Generate images using artificial intelligence through a simple and accessible interface.
+Create AI-generated images through a simple web interface.
 
 ## Features
 
-- AI image generation powered by Pollinations.
+- AI image generation using Pollinations.
 - Simple and user-friendly interface.
-- Access to AI-powered image generation models available through Pollinations.
-- Runs as a web application.
-- Hosted on Hugging Face Spaces.
+- Access to supported image generation models.
+- Web-based application hosted on Hugging Face Spaces.
 
 ## Technologies
 
-- **React.js** — User interface.
-- **JavaScript** — Application logic.
-- **HTML5** — Web page structure.
-- **CSS3** — Styling and responsive design.
-- **Pollinations API** — AI image generation.
-- **Hugging Face Spaces** — Hosting.
+- React.js
+- JavaScript
+- HTML5
+- CSS3
+- Pollinations API
+- Hugging Face Spaces
 
 ## Live Demo
 
-Try Pollinations Image Studio:
+Try the application here:
 
 https://lahoucine98-pollinations-image-studio.static.hf.space/
 
-## Repository
+## Source Code
 
-Source code:
+GitHub repository:
 
 https://github.com/lahoucinebathoum/pollinations-image-studio
 
@@ -62,47 +61,37 @@ Clone the repository:
 git clone https://github.com/lahoucinebathoum/pollinations-image-studio.git
 ```
 
-Open the project directory:
+Open the project folder:
 
 ```bash
 cd pollinations-image-studio
 ```
 
-Install the dependencies:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### Run Locally
+### Run the Application
 
-If your project uses Vite, start the development server with:
+If the project uses Vite:
 
 ```bash
 npm run dev
 ```
 
-If your project uses Create React App, use:
+If the project uses Create React App:
 
 ```bash
 npm start
 ```
 
-### Build
-
-For a Vite project:
+### Build for Production
 
 ```bash
 npm run build
 ```
-
-For a Create React App project:
-
-```bash
-npm run build
-```
-
-The production build can then be deployed to a compatible static hosting service.
 
 ## Credits
 
