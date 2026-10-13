@@ -1,34 +1,25 @@
----
-title: Pollinations Image Studio
-emoji: 🎨
-colorFrom: indigo
-colorTo: red
-sdk: static
-app_file: index.html
-pinned: false
-license: mit
-short_description: Free AI image generator powered by Pollinations
----
+
+
+
 
 [![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
 
 # Pollinations Image Studio
 
-An AI image generation studio powered by the Pollinations API.
-
-Create AI-generated images through a simple web interface.
+An AI image generation application built with React.js and JavaScript, powered by the Pollinations API.
 
 ## Features
 
-- AI image generation using Pollinations.
-- Simple and user-friendly interface.
-- Access to supported image generation models.
-- Web-based application hosted on Hugging Face Spaces.
+- AI image generation
+- Integration with the Pollinations API
+- Simple and responsive user interface
+- Browser-based application
+- Hosted on Hugging Face Spaces
 
 ## Technologies
 
 - React.js
-- JavaScript
+- JavaScript (ES6+)
 - HTML5
 - CSS3
 - Pollinations API
@@ -36,58 +27,43 @@ Create AI-generated images through a simple web interface.
 
 ## Live Demo
 
-Try the application here:
-
-https://lahoucine98-pollinations-image-studio.static.hf.space/
+[Pollinations Image Studio](https://lahoucine98-pollinations-image-studio.static.hf.space/)
 
 ## Source Code
 
-GitHub repository:
+[GitHub Repository](https://github.com/lahoucinebathoum/pollinations-image-studio)
 
-https://github.com/lahoucinebathoum/pollinations-image-studio
+## Run Locally
 
-## Getting Started
+Make sure Node.js and npm are installed.
 
-### Prerequisites
-
-- Node.js
-- npm
-
-### Installation
-
-Clone the repository:
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/lahoucinebathoum/pollinations-image-studio.git
 ```
 
-Open the project folder:
+### 2. Navigate to the project folder
 
 ```bash
 cd pollinations-image-studio
 ```
 
-Install dependencies:
+### 3. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Run the Application
+### 4. Start the development server
 
-If the project uses Vite:
+If your project uses Vite:
 
 ```bash
 npm run dev
 ```
 
-If the project uses Create React App:
-
-```bash
-npm start
-```
-
-### Build for Production
+### 5. Build the application
 
 ```bash
 npm run build
@@ -95,7 +71,4 @@ npm run build
 
 ## Credits
 
-This project uses [Pollinations.ai](https://pollinations.ai/) for AI image generation.
-
-[![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
-
+AI image generation powered by [Pollinations.ai](https://pollinations.ai/).
