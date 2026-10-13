@@ -12,52 +12,101 @@ short_description: Free AI image generator powered by Pollinations
 
 [![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
 
-# 🎨 Pollinations Image Studio
+# Pollinations Image Studio
 
-Pollinations Image Studio is a web application built with React.js, JavaScript, HTML, and CSS. It allows users to generate AI images directly in their browser using the Pollinations API.
+An AI image generation studio powered by the Pollinations API.
 
-## ✨ Features
+Generate images using artificial intelligence through a simple and accessible interface.
 
-- Generate AI images from text prompts.
-- Simple and responsive web interface.
-- Integration with the Pollinations API.
-- Browser-based image generation.
-- Pollinations account connection through the available authentication flow.
+## Features
 
-## 🚀 Live Demo
+- AI image generation powered by Pollinations.
+- Simple and user-friendly interface.
+- Access to AI-powered image generation models available through Pollinations.
+- Runs as a web application.
+- Hosted on Hugging Face Spaces.
 
-Try the application:
+## Technologies
+
+- **React.js** — User interface.
+- **JavaScript** — Application logic.
+- **HTML5** — Web page structure.
+- **CSS3** — Styling and responsive design.
+- **Pollinations API** — AI image generation.
+- **Hugging Face Spaces** — Hosting.
+
+## Live Demo
+
+Try Pollinations Image Studio:
 
 https://lahoucine98-pollinations-image-studio.static.hf.space/
 
-## 🛠️ Technologies
+## Repository
 
-- React.js
-- JavaScript
-- HTML5
-- CSS3
-- Pollinations API
-- Hugging Face Spaces
+Source code:
 
-## 📖 Getting Started
+https://github.com/lahoucinebathoum/pollinations-image-studio
 
-1. Open the live application.
-2. Connect your Pollinations account if required.
-3. Enter a prompt describing the image you want to generate.
-4. Generate and view your AI image.
+## Getting Started
 
-## 🙏 Credits
+### Prerequisites
 
-This project uses the Pollinations API for AI image generation.
+- Node.js
+- npm
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/lahoucinebathoum/pollinations-image-studio.git
+```
+
+Open the project directory:
+
+```bash
+cd pollinations-image-studio
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+### Run Locally
+
+If your project uses Vite, start the development server with:
+
+```bash
+npm run dev
+```
+
+If your project uses Create React App, use:
+
+```bash
+npm start
+```
+
+### Build
+
+For a Vite project:
+
+```bash
+npm run build
+```
+
+For a Create React App project:
+
+```bash
+npm run build
+```
+
+The production build can then be deployed to a compatible static hosting service.
+
+## Credits
+
+This project uses [Pollinations.ai](https://pollinations.ai/) for AI image generation.
 
 [![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
 
-Visit [pollinations.ai](https://pollinations.ai/) to discover more.
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-Made with pollinations.ai
