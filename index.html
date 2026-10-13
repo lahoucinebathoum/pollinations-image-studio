@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pollinations Image Studio</title>
+<style>
+body{margin:0;background:#111827;color:white;font-family:Arial,sans-serif;display:grid;place-items:center;min-height:100vh}
+main{width:min(90%,600px);padding:24px;box-sizing:border-box;background:#1f2937;border-radius:16px}
+input,button{box-sizing:border-box;width:100%;padding:12px;margin-top:12px;border:0;border-radius:8px}
+button{background:#8b5cf6;color:white;font-weight:bold;cursor:pointer}
+img{width:100%;margin-top:20px;border-radius:8px}
+</style>
+</head>
+<body>
+<main>
+<h1>🎨 Pollinations Image Studio</h1>
+<p>Décris l'image que tu veux créer.</p>
+<input id="prompt" placeholder="Ex. : un anime au coucher du soleil">
+<button id="generate">Générer une image</button>
+<p id="status"></p>
+<img id="result" hidden alt="Image générée">
+</main>
+<script>
+const input=document.getElementById("prompt");
+const button=document.getElementById("generate");
+const status=document.getElementById("status");
+const result=document.getElementById("result");
+
+button.onclick=()=>{
+const prompt=input.value.trim();
+if(!prompt){status.textContent="Écris une description.";return;}
+button.disabled=true;
+status.textContent="Génération en cours…";
+result.hidden=true;
+result.onload=()=>{result.hidden=false;status.textContent="Image générée !";button.disabled=false;};
+result.onerror=()=>{status.textContent="Échec. Réessaie.";button.disabled=false;};
+result.src="https://image.pollinations.ai/prompt/"+encodeURIComponent(prompt)+"?width=1024&height=1024&nologo=true&seed="+Math.floor(Math.random()*1000000);
+};
+</script>
+</body>
+</html>
