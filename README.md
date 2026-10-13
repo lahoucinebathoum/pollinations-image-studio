@@ -1,15 +1,16 @@
+
 ---
 title: Pollinations Image Studio
-emoji: 🐠
+emoji: 🎨
 colorFrom: indigo
 colorTo: red
 sdk: static
-app_build_command: npm run build
-app_file: build/index.html
+app_file: index.html
 pinned: false
 license: mit
 short_description: Free AI image generator powered by Pollinations
 ---
+
 
 # Getting Started with Create React App
 
