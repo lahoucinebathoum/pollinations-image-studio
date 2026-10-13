@@ -53,7 +53,7 @@ npm install
 
 ### 4. Start the development server
 
-If your project uses Vite:
+If the project uses Vite:
 
 ```bash
 npm run dev
