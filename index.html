@@ -2,172 +2,384 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pollinations Image Studio</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#111827;color:white;font-family:Arial,sans-serif;display:grid;place-items:center;min-height:100vh;padding:20px}
-main{width:min(100%,600px);padding:24px;background:#1f2937;border-radius:16px;box-shadow:0 15px 40px #0005}
-h1{font-size:clamp(24px,5vw,32px)}
-p{line-height:1.5;color:#d1d5db}
-input,button{width:100%;padding:13px;margin-top:12px;border:0;border-radius:8px;font-size:15px}
-input{background:#374151;color:white;border:1px solid #4b5563}
-button{background:#8b5cf6;color:white;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6;cursor:wait}
-.secondary{background:#374151}
-#status{overflow-wrap:anywhere}
-img{display:block;width:100%;margin-top:20px;border-radius:8px}
-.small{font-size:13px;color:#9ca3af}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10101b" />
+  <title>Pollinations Image Studio</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, sans-serif;
+      color: #f8fafc;
+      background: radial-gradient(circle at top, #312e81, #10101b 65%);
+    }
+
+    main {
+      width: min(100%, 680px);
+      padding: 28px;
+      border: 1px solid #ffffff20;
+      border-radius: 24px;
+      background: #171725ed;
+      box-shadow: 0 20px 70px #0005;
+    }
+
+    h1 { margin-top: 0; font-size: clamp(26px, 5vw, 38px); }
+    .subtitle { color: #c4c4d8; line-height: 1.6; }
+
+    .connection {
+      margin: 22px 0;
+      padding: 16px;
+      border-radius: 16px;
+      background: #ffffff08;
+      border: 1px solid #ffffff18;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      margin: 12px 0;
+      padding: 15px;
+      color: white;
+      background: #0f0f1b;
+      border: 1px solid #45455e;
+      border-radius: 12px;
+      font: inherit;
+    }
+
+    button {
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(100deg, #7c3aed, #db2777);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .55; cursor: wait; }
+
+    button.secondary {
+      margin-left: 8px;
+      background: #343448;
+    }
+
+    #status {
+      min-height: 24px;
+      overflow-wrap: anywhere;
+      color: #c4b5fd;
+    }
+
+    #result {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 16px;
+    }
+
+    #result[hidden], button[hidden] { display: none; }
+
+    .small { color: #a5a5bd; font-size: 13px; line-height: 1.6; }
+  </style>
 </head>
 <body>
-<main>
-<h1>🎨 Pollinations Image Studio</h1>
-<p>Décris ton image et génère-la avec tes propres Pollen.</p>
+  <main>
+    <h1>🎨 Pollinations Image Studio</h1>
+    <p class="subtitle">
+      Décris l'image que tu souhaites créer et génère-la
+      avec ton propre compte Pollinations.
+    </p>
 
-<div id="connection">
-  <p id="account">Connecte ton compte Pollinations pour commencer.</p>
-  <button id="connect">🔑 Connecter mon compte Pollinations</button>
-  <button id="disconnect" class="secondary" hidden>Déconnecter</button>
-</div>
+    <section class="connection">
+      <p id="account">Vérification de la connexion…</p>
+      <button id="connect" type="button">
+        🔑 Connecter mon compte Pollinations
+      </button>
+      <button id="disconnect" class="secondary" type="button" hidden>
+        Déconnecter
+      </button>
+    </section>
 
-<input id="prompt" placeholder="Ex. : un anime au coucher du soleil">
-<button id="generate">Générer une image</button>
-<p id="status" role="status" aria-live="polite"></p>
-<img id="result" hidden alt="Image générée">
-<p class="small">L'autorisation est personnelle. Tu peux la révoquer depuis ton compte Pollinations.</p>
-</main>
+    <form id="imageForm">
+      <label for="prompt"><strong>Description de l'image</strong></label>
+      <input
+        id="prompt"
+        maxlength="1000"
+        placeholder="Ex. : un personnage anime au coucher du soleil"
+        required
+      />
+      <button id="generate" type="submit">✨ Générer une image</button>
+    </form>
 
-<script>
-const input = document.getElementById("prompt");
-const button = document.getElementById("generate");
-const status = document.getElementById("status");
-const result = document.getElementById("result");
-const connect = document.getElementById("connect");
-const disconnect = document.getElementById("disconnect");
-const account = document.getElementById("account");
+    <p id="status" role="status" aria-live="polite"></p>
+    <img id="result" alt="Image générée" hidden />
 
-let apiKey = null;
-let imageUrl = null;
+    <p class="small">
+      L'autorisation est personnelle. Le jeton d'accès reste en mémoire
+      dans cet onglet et n'est pas enregistré dans localStorage.
+      Tu peux révoquer l'autorisation depuis ton compte Pollinations.
+    </p>
+  </main>
 
-function updateConnection() {
-  const connected = Boolean(apiKey);
-  account.textContent = connected
-    ? "✅ Compte Pollinations connecté dans cet onglet."
-    : "Connecte ton compte Pollinations pour commencer.";
-  connect.hidden = connected;
-  disconnect.hidden = !connected;
-}
+  <script>
+    // Clé publique de ton application Pollinations.
+    const CLIENT_ID = "pk_JMUaNtHVRsHUU6eF";
 
-function handleCallback() {
-  const params = new URLSearchParams(location.hash.slice(1));
-  const returnedKey = params.get("api_key");
-  const returnedState = params.get("state");
-  const expectedState = sessionStorage.getItem("pollinations_byop_state");
+    // Cette URL doit correspondre exactement à une URL de redirection
+    // autorisée dans les paramètres de ta clé Pollinations.
+    const REDIRECT_URI = location.origin + location.pathname;
 
-  if (returnedKey) {
-    if (!expectedState || returnedState !== expectedState) {
-      status.textContent =
-        "Retour de connexion non vérifié. Recommence la connexion.";
-      history.replaceState(null, "", location.pathname + location.search);
-      return;
+    const connectButton = document.getElementById("connect");
+    const disconnectButton = document.getElementById("disconnect");
+    const account = document.getElementById("account");
+    const form = document.getElementById("imageForm");
+    const promptInput = document.getElementById("prompt");
+    const generateButton = document.getElementById("generate");
+    const status = document.getElementById("status");
+    const result = document.getElementById("result");
+
+    let accessToken = null;
+    let imageObjectUrl = null;
+
+    function updateConnection() {
+      const connected = Boolean(accessToken);
+      account.textContent = connected
+        ? "✅ Ton compte est connecté dans cet onglet."
+        : "Connecte ton compte Pollinations pour commencer.";
+
+      connectButton.hidden = connected;
+      disconnectButton.hidden = !connected;
     }
 
-    // Keep the temporary key in memory only.
-    apiKey = returnedKey;
-    sessionStorage.removeItem("pollinations_byop_state");
+    function base64Url(bytes) {
+      let binary = "";
+      for (const byte of bytes) binary += String.fromCharCode(byte);
 
-    // Remove the key from the visible URL immediately.
-    history.replaceState(null, "", location.pathname + location.search);
-    status.textContent = "Connexion réussie !";
-  } else if (params.get("error")) {
-    status.textContent = "Connexion refusée ou annulée.";
-    history.replaceState(null, "", location.pathname + location.search);
-    sessionStorage.removeItem("pollinations_byop_state");
-  }
+      return btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+    }
 
-  updateConnection();
-}
+    function randomString(length = 64) {
+      const bytes = new Uint8Array(length);
+      crypto.getRandomValues(bytes);
+      return base64Url(bytes);
+    }
 
-connect.onclick = () => {
-  const state = crypto.randomUUID();
-  sessionStorage.setItem("pollinations_byop_state", state);
+    async function sha256Base64Url(value) {
+      const encoded = new TextEncoder().encode(value);
+      const digest = await crypto.subtle.digest("SHA-256", encoded);
+      return base64Url(new Uint8Array(digest));
+    }
 
-  // Use this Space's own URL so a duplicated Space can return to itself.
-  const redirectUri = location.origin + location.pathname;
-  const params = new URLSearchParams({
-    redirect_uri: redirectUri,
-    state
-  });
+    async function connectAccount() {
+      try {
+        if (!crypto.subtle || !crypto.getRandomValues) {
+          throw new Error("Ton navigateur ne prend pas en charge PKCE.");
+        }
 
-  location.href =
-    "https://enter.pollinations.ai/authorize?" + params.toString();
-};
+        const verifier = randomString(64);
+        const challenge = await sha256Base64Url(verifier);
+        const state = randomString(32);
 
-disconnect.onclick = () => {
-  apiKey = null;
-  result.hidden = true;
-  status.textContent = "Compte déconnecté.";
-  updateConnection();
-};
+        // Le vérificateur est conservé uniquement pour le retour OAuth.
+        sessionStorage.setItem("pollinations_pkce_verifier", verifier);
+        sessionStorage.setItem("pollinations_oauth_state", state);
 
-button.onclick = async () => {
-  const prompt = input.value.trim();
+        const params = new URLSearchParams({
+          response_type: "code",
+          client_id: CLIENT_ID,
+          redirect_uri: REDIRECT_URI,
+          scope: "profile usage",
+          state: state,
+          code_challenge: challenge,
+          code_challenge_method: "S256",
+          models: "image",
+          expiry: "7"
+        });
 
-  if (!prompt) {
-    status.textContent = "Écris une description.";
-    return;
-  }
+        location.assign(
+          "https://enter.pollinations.ai/authorize?" + params.toString()
+        );
+      } catch (error) {
+        status.textContent = error.message || "Impossible de démarrer la connexion.";
+      }
+    }
 
-  if (!apiKey) {
-    status.textContent = "Connecte d'abord ton compte Pollinations.";
-    return;
-  }
+    async function handleOAuthCallback() {
+      const params = new URLSearchParams(location.search);
+      const code = params.get("code");
+      const returnedState = params.get("state");
+      const oauthError = params.get("error");
 
-  button.disabled = true;
-  result.hidden = true;
-  status.textContent = "Génération en cours…";
+      if (oauthError) {
+        status.textContent = "Connexion annulée ou refusée par Pollinations.";
+        sessionStorage.removeItem("pollinations_pkce_verifier");
+        sessionStorage.removeItem("pollinations_oauth_state");
+        history.replaceState(null, "", REDIRECT_URI);
+        return;
+      }
 
-  try {
-    const url =
-      "https://gen.pollinations.ai/image/" +
-      encodeURIComponent(prompt) +
-      "?width=1024&height=1024&nologo=true&seed=" +
-      Math.floor(Math.random() * 1000000);
+      if (!code) {
+        updateConnection();
+        return;
+      }
 
-    const response = await fetch(url, {
-      headers: { Authorization: "Bearer " + apiKey }
+      const expectedState = sessionStorage.getItem("pollinations_oauth_state");
+      const verifier = sessionStorage.getItem("pollinations_pkce_verifier");
+
+      // Nettoyer le code OAuth de la barre d'adresse.
+      history.replaceState(null, "", REDIRECT_URI);
+
+      sessionStorage.removeItem("pollinations_oauth_state");
+      sessionStorage.removeItem("pollinations_pkce_verifier");
+
+      if (!expectedState || returnedState !== expectedState || !verifier) {
+        status.textContent =
+          "Retour OAuth non vérifié. Clique à nouveau sur Connecter.";
+        return;
+      }
+
+      connectButton.disabled = true;
+      status.textContent = "Finalisation de la connexion…";
+
+      try {
+        const body = new URLSearchParams({
+          grant_type: "authorization_code",
+          code: code,
+          client_id: CLIENT_ID,
+          redirect_uri: REDIRECT_URI,
+          code_verifier: verifier
+        });
+
+        const response = await fetch(
+          "https://enter.pollinations.ai/api/oauth/token",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: body.toString()
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Échange OAuth refusé (" + response.status +
+            "). Vérifie la clé et l'URL de redirection."
+          );
+        }
+
+        const data = await response.json();
+
+        if (!data.access_token) {
+          throw new Error("Pollinations n'a pas renvoyé de jeton d'accès.");
+        }
+
+        accessToken = data.access_token;
+        status.textContent = "Connexion réussie ! Tu peux générer une image.";
+        updateConnection();
+      } catch (error) {
+        status.textContent = error.message || "La connexion a échoué.";
+      } finally {
+        connectButton.disabled = false;
+      }
+    }
+
+    connectButton.addEventListener("click", connectAccount);
+
+    disconnectButton.addEventListener("click", () => {
+      accessToken = null;
+
+      if (imageObjectUrl) {
+        URL.revokeObjectURL(imageObjectUrl);
+        imageObjectUrl = null;
+      }
+
+      result.removeAttribute("src");
+      result.hidden = true;
+      status.textContent = "Compte déconnecté de cette page.";
+      updateConnection();
     });
 
-    if (!response.ok) {
-      throw new Error(
-        response.status === 401 || response.status === 403
-          ? "Autorisation expirée ou refusée. Reconnecte ton compte."
-          : "Erreur API (" + response.status + "). Vérifie tes Pollen et réessaie."
-      );
-    }
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    const blob = await response.blob();
+      const prompt = promptInput.value.trim();
 
-    if (!blob.type.startsWith("image/")) {
-      throw new Error("La réponse reçue n'est pas une image.");
-    }
+      if (!prompt) {
+        status.textContent = "Écris une description pour l'image.";
+        return;
+      }
 
-    if (imageUrl) URL.revokeObjectURL(imageUrl);
-    imageUrl = URL.createObjectURL(blob);
-    result.src = imageUrl;
-    result.hidden = false;
-    status.textContent = "Image générée !";
-  } catch (error) {
-    status.textContent = error.message || "Échec. Réessaie.";
-  } finally {
-    button.disabled = false;
-  }
-};
+      if (!accessToken) {
+        status.textContent = "Connecte d'abord ton compte Pollinations.";
+        return;
+      }
 
-handleCallback();
-updateConnection();
-</script>
+      generateButton.disabled = true;
+      result.hidden = true;
+      status.textContent = "Génération en cours…";
+
+      try {
+        const params = new URLSearchParams({
+          width: "1024",
+          height: "1024",
+          nologo: "true",
+          seed: String(Math.floor(Math.random() * 1000000))
+        });
+
+        const url =
+          "https://gen.pollinations.ai/image/" +
+          encodeURIComponent(prompt) + "?" + params.toString();
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: "Bearer " + accessToken
+          }
+        });
+
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            throw new Error(
+              "Autorisation expirée ou refusée. Reconnecte ton compte."
+            );
+          }
+
+          throw new Error(
+            "Erreur API (" + response.status +
+            "). Vérifie ton solde Pollen et réessaie."
+          );
+        }
+
+        const blob = await response.blob();
+
+        if (!blob.type.startsWith("image/")) {
+          throw new Error("La réponse reçue n'est pas une image.");
+        }
+
+        if (imageObjectUrl) URL.revokeObjectURL(imageObjectUrl);
+
+        imageObjectUrl = URL.createObjectURL(blob);
+        result.src = imageObjectUrl;
+        result.hidden = false;
+        status.textContent = "✅ Image générée !";
+      } catch (error) {
+        status.textContent = error.message || "Échec de la génération.";
+      } finally {
+        generateButton.disabled = false;
+      }
+    });
+
+    handleOAuthCallback();
+    updateConnection();
+  </script>
 </body>
 </html>
