@@ -68,3 +68,12 @@ npm run build
 ## Credits
 
 AI image generation powered by [Pollinations.ai](https://pollinations.ai/).
+## Make it your own
+
+You can duplicate this Hugging Face Space and customize it for your own use.
+
+1. Duplicate the Space on Hugging Face.
+2. Customize the interface and source code.
+3. Connect your Pollinations account to generate images.
+
+This project is an image-generation studio powered by the Pollinations API.
